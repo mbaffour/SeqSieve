@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: SeqSieve tutorials
+    url: https://mbaffour890.github.io/SeqSieve/blog.html#tutorials
+    about: Start here for common workflows and validation examples.

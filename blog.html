@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Announcing SeqSieve v0.1.0 with tutorials, contribution paths, and GitHub Pages deployment notes.">
+    <title>Announcing SeqSieve v0.1.0 | SeqSieve Blog</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body class="blog-page">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="./index.html" aria-label="SeqSieve app">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>
+            <strong>SeqSieve</strong>
+            <small>Deduplicate sequences. Preserve context.</small>
+          </span>
+        </a>
+        <nav class="header-nav" aria-label="Blog navigation">
+          <a href="./index.html">App</a>
+          <a href="#tutorials">Tutorials</a>
+          <a href="#housekeeping">Report an issue</a>
+          <a href="https://github.com/mbaffour/SeqSieve/" rel="noreferrer">GitHub</a>
+        </nav>
+        <div class="header-actions">
+          <span class="privacy-badge">Local-only processing</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="blog-hero section-band">
+        <div class="blog-hero-copy">
+          <h1>SeqSieve is ready to filter redundancy, not context.</h1>
+          <p>SeqSieve v0.1.0 is a browser-based exact deduplication tool for FASTA and FASTQ files. It collapses computational redundancy while preserving counts, identifiers, mappings, duplicate groups, and reproducible methods text.</p>
+          <ul class="feature-checks" aria-label="SeqSieve highlights">
+            <li>Exact deduplication, not clustering</li>
+            <li>Reverse-complement aware DNA/RNA mode</li>
+            <li>FASTA and FASTQ support</li>
+            <li>Provenance-preserving exports</li>
+            <li>Quality-aware FASTQ representatives</li>
+            <li>Runs locally in your browser</li>
+          </ul>
+          <div class="hero-actions">
+            <a class="button primary" href="./index.html">Open the app</a>
+            <a class="button secondary" href="#tutorials">Start the tutorial</a>
+          </div>
+          <p class="microcopy">No uploads. No tracking. Your sequence data stays on your device.</p>
+        </div>
+        <div class="sieve-visual" aria-hidden="true">
+          <div class="sieve-ring">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="read-stream">
+            <code>ATGCCGTAAAAG</code>
+            <code>AAGCTTCCGAAG</code>
+            <code>GGTACCGTAAAT</code>
+            <code>TTGACCGTAAAT</code>
+          </div>
+        </div>
+      </section>
+
+      <section class="tutorial-strip section-band" id="tutorials" aria-labelledby="tutorialsTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Tutorials</p>
+            <h2 id="tutorialsTitle">Step-by-step guides for common workflows</h2>
+          </div>
+          <a class="text-link" href="./TUTORIALS.md">Open tutorial markdown</a>
+        </div>
+        <div class="tutorial-grid">
+          <article class="tutorial-card">
+            <span class="step-number">1</span>
+            <pre>&gt;seq1
+MKTLLV
+&gt;seq2
+MKTLLV</pre>
+            <h3>FASTA deduplication basics</h3>
+            <p>Collapse identical sequences while preserving original IDs, full headers, mappings, groups, and counts.</p>
+            <a href="#tutorial-fasta">Read tutorial</a>
+          </article>
+          <article class="tutorial-card">
+            <span class="step-number">2</span>
+            <pre>&gt;seqA ATGC
+&gt;seqB GCAT</pre>
+            <h3>Reverse-complement aware DNA</h3>
+            <p>Treat forward and reverse-complement DNA/RNA records as equivalent without changing representative orientation.</p>
+            <a href="#tutorial-rc">Read tutorial</a>
+          </article>
+          <article class="tutorial-card">
+            <span class="step-number">3</span>
+            <pre>@read1 !!!!
+@read2 IIII</pre>
+            <h3>FASTQ quality representatives</h3>
+            <p>Select the highest mean Phred+33 quality read among identical sequences and keep read counts.</p>
+            <a href="#tutorial-fastq">Read tutorial</a>
+          </article>
+          <article class="tutorial-card">
+            <span class="step-number">4</span>
+            <pre>bad text
+&gt;empty
+&gt;ok ATGC</pre>
+            <h3>Warnings and malformed inputs</h3>
+            <p>Understand how SeqSieve reports questionable records without silently discarding context.</p>
+            <a href="#tutorial-warnings">Read tutorial</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="housekeeping section-band" id="housekeeping" aria-labelledby="housekeepingTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Housekeeping</p>
+            <h2 id="housekeepingTitle">Help make SeqSieve better</h2>
+          </div>
+        </div>
+        <div class="housekeeping-grid">
+          <article>
+            <h3>Report an error</h3>
+            <p>Found a parser bug, wrong count, confusing warning, browser problem, or export issue? Include settings, expected result, observed result, browser, and a minimal safe example.</p>
+            <a href="https://github.com/mbaffour/SeqSieve/issues/new?template=bug_report.yml">Open an issue</a>
+          </article>
+          <article>
+            <h3>Request an improvement</h3>
+            <p>Have a workflow idea for phage databases, HMM preparation, BLAST cleanup, amplicon dereplication, or FASTQ handling? Tell us why it matters scientifically.</p>
+            <a href="https://github.com/mbaffour/SeqSieve/issues/new?template=feature_request.yml">Request a feature</a>
+          </article>
+          <article>
+            <h3>Cite SeqSieve</h3>
+            <p>If SeqSieve helps your research, use <code>CITATION.cff</code> and include the exported methods paragraph in workflow notes.</p>
+            <a href="./CITATION.cff">View citation metadata</a>
+          </article>
+          <article>
+            <h3>Host it yourself</h3>
+            <p>SeqSieve is static. Fork the repository, enable GitHub Pages, and serve the app plus this announcement page without a backend.</p>
+            <a href="#deploy">Deployment guide</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="article-layout section-band">
+        <aside class="toc-panel" aria-label="On this page">
+          <strong>On this page</strong>
+          <a href="#what">What is SeqSieve?</a>
+          <a href="#why">Why exact deduplication?</a>
+          <a href="#features">Key features</a>
+          <a href="#tutorial-fasta">FASTA tutorial</a>
+          <a href="#tutorial-rc">Reverse-complement tutorial</a>
+          <a href="#tutorial-fastq">FASTQ tutorial</a>
+          <a href="#tutorial-warnings">Warnings tutorial</a>
+          <a href="#contribute">Contribute</a>
+          <a href="#deploy">Deploy</a>
+        </aside>
+
+        <article class="announcement-article">
+          <p class="article-meta">Announcement · SeqSieve v0.1.0</p>
+          <h2>Announcing SeqSieve v0.1.0</h2>
+          <p class="lead">A modern, fully client-side tool for exact sequence deduplication with provenance-preserving exports.</p>
+
+          <h3 id="what">What is SeqSieve?</h3>
+          <p>SeqSieve deduplicates FASTA and FASTQ records directly in the browser. It supports exact sequence-content deduplication, ID-based deduplication, full-record deduplication, normalization controls, reverse-complement-aware DNA/RNA matching, representative selection, and publication-ready reports.</p>
+          <p class="callout">SeqSieve performs exact deduplication. It is not a replacement for CD-HIT, MMseqs2, VSEARCH, or other approximate similarity-clustering tools when the goal is to group non-identical sequences by percent identity or coverage.</p>
+
+          <h3 id="why">Why exact deduplication?</h3>
+          <p>Exact deduplication is useful when redundant records are computational clutter rather than biological signal. Phage protein databases, microbial gene sets, HMM input collections, BLAST hit lists, and amplicon datasets often need cleanup before downstream analysis. SeqSieve keeps the context that explains where every sequence came from.</p>
+
+          <h3 id="features">What is new in v0.1.0?</h3>
+          <ul>
+            <li>Robust FASTA parsing with multi-line records, duplicate-ID warnings, empty-sequence warnings, and line tracking.</li>
+            <li>FASTQ parsing with quality-length validation and mean Phred+33 scoring.</li>
+            <li>Deduplication by sequence content, sequence ID, or full record.</li>
+            <li>Normalization controls for case, whitespace, and gaps.</li>
+            <li>Optional reverse-complement-aware matching for DNA/RNA.</li>
+            <li>Exports for deduplicated FASTA/FASTQ, mapping TSV, duplicate groups TSV, counts TSV, summary TXT, reproducibility JSON, and methods text.</li>
+          </ul>
+
+          <h3 id="tutorial-fasta">Tutorial 1: FASTA deduplication basics</h3>
+          <ol>
+            <li>Open <a href="./index.html">SeqSieve</a> and select <strong>Try demo data</strong>, or upload <code>test-data/simple_duplicates.fasta</code>.</li>
+            <li>Set format to <strong>Auto</strong> or <strong>FASTA</strong>.</li>
+            <li>Set deduplication mode to <strong>By sequence content</strong>.</li>
+            <li>Click <strong>Deduplicate</strong> and confirm 3 input records, 2 unique representatives, and 1 duplicate collapsed.</li>
+            <li>Download the mapping, duplicate groups, counts, deduplicated FASTA, summary, and JSON files.</li>
+          </ol>
+
+          <h3 id="tutorial-rc">Tutorial 2: Reverse-complement-aware DNA cleanup</h3>
+          <ol>
+            <li>Upload <code>test-data/dna_reverse_complement_test.fasta</code>.</li>
+            <li>Set sequence type to <strong>DNA</strong>.</li>
+            <li>Run with reverse complement off and confirm two unique records.</li>
+            <li>Turn on <strong>Treat reverse complements as duplicates</strong>.</li>
+            <li>Run again and confirm one unique representative with orientation recorded in the mapping table.</li>
+          </ol>
+
+          <h3 id="tutorial-fastq">Tutorial 3: FASTQ quality-aware representatives</h3>
+          <ol>
+            <li>Upload <code>test-data/simple_fastq.fastq</code>.</li>
+            <li>Set format to <strong>FASTQ</strong>.</li>
+            <li>Set representative rule to <strong>Highest mean quality for FASTQ</strong>.</li>
+            <li>Run deduplication and inspect the mapping table to confirm the higher-quality read was selected.</li>
+            <li>Keep the counts table with downstream notes because read deduplication can alter apparent abundance.</li>
+          </ol>
+
+          <h3 id="tutorial-warnings">Tutorial 4: Warnings and malformed inputs</h3>
+          <ol>
+            <li>Upload <code>test-data/malformed_records.fasta</code>.</li>
+            <li>Run analysis and open the <strong>Warnings</strong> tab.</li>
+            <li>Check text before the first header, empty records, duplicate IDs, and unexpected alphabet characters.</li>
+            <li>Fix the source file where warnings are biologically meaningful, then rerun and export the clean report.</li>
+          </ol>
+
+          <h3 id="contribute">Reporting errors and requesting improvements</h3>
+          <p>Useful reports include a small safe example, selected settings, expected output, observed output, browser and operating system, and whether the issue affects preview, export, parsing, or scientific interpretation. For feature requests, describe the biological workflow first and the desired UI second.</p>
+
+          <h3 id="deploy">Hosting SeqSieve and this blog on GitHub Pages</h3>
+          <ol>
+            <li>Create a new repository named <code>SeqSieve</code>.</li>
+            <li>Add all files in this folder at the repository root.</li>
+            <li>Commit with a message such as <code>Release SeqSieve v0.1.0</code>.</li>
+            <li>Push to GitHub.</li>
+            <li>Open repository settings, choose <strong>Pages</strong>, and publish from the root of the default branch.</li>
+            <li>The app will live at <code>https://mbaffour.github.io/SeqSieve/</code>; the blog will live at <code>https://mbaffour.github.io/SeqSieve/blog.html</code>.</li>
+          </ol>
+        </article>
+
+        <aside class="glance-panel" aria-label="At a glance">
+          <h3>At a glance</h3>
+          <dl>
+            <dt>Privacy</dt>
+            <dd>Runs locally. No uploads, no tracking.</dd>
+            <dt>Formats</dt>
+            <dd>FASTA, FASTQ, and browser-supported gzip.</dd>
+            <dt>Modes</dt>
+            <dd>By sequence, ID, or full record.</dd>
+            <dt>Exports</dt>
+            <dd>FASTA/FASTQ, TSV tables, TXT report, JSON metadata.</dd>
+          </dl>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>SeqSieve v0.1.0</span>
+      <span>Built for scientists, by scientists.</span>
+      <a href="./index.html">App</a>
+      <a href="#tutorials">Tutorials</a>
+      <a href="https://github.com/mbaffour/SeqSieve/issues">Report an issue</a>
+      <a href="https://github.com/mbaffour/SeqSieve/">GitHub</a>
+    </footer>
+  </body>
+</html>

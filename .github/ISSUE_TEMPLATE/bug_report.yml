@@ -1,0 +1,65 @@
+name: Bug report
+description: Report a parser, deduplication, export, UI, or browser issue.
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve SeqSieve. Please avoid sharing private or sensitive sequence data. A minimal safe example is best.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - FASTA parser
+        - FASTQ parser
+        - Deduplication engine
+        - Reverse-complement mode
+        - Exports
+        - Methods/report text
+        - UI/browser behavior
+        - Documentation/tutorials
+    validations:
+      required: true
+  - type: textarea
+    id: input
+    attributes:
+      label: Minimal input example
+      description: Paste the smallest safe FASTA/FASTQ example that reproduces the issue.
+      render: text
+    validations:
+      required: false
+  - type: textarea
+    id: settings
+    attributes:
+      label: SeqSieve settings
+      description: Include format, sequence type, dedupe mode, normalization, reverse-complement setting, and representative rule.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and operating system
+      placeholder: "Chrome 125 on Windows 11"
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Include screenshots, exported rows, warning text, or notes about file size when helpful.
+    validations:
+      required: false

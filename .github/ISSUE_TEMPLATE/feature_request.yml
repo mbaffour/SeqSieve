@@ -1,0 +1,49 @@
+name: Feature request
+description: Suggest an improvement for a scientific workflow.
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        SeqSieve focuses on exact deduplication. If your request is approximate similarity clustering, please explain how it should remain separate from exact dedupe behavior.
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Scientific workflow
+      description: What biological or computational task are you trying to support?
+      placeholder: "For example: cleaning phage protein FASTA files before HMM construction..."
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Current limitation
+      description: What is hard, confusing, or missing today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+      description: Describe the UI, export, parser, report, or documentation change you want.
+    validations:
+      required: true
+  - type: dropdown
+    id: importance
+    attributes:
+      label: Impact
+      options:
+        - Nice to have
+        - Helps a common workflow
+        - Blocks a workflow
+        - Needed for publication/reproducibility
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example data or references
+      description: Optional safe examples, public datasets, or tool references.
+    validations:
+      required: false

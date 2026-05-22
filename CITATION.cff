@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use SeqSieve in your work, please cite it using the metadata below."
+title: "SeqSieve: Browser-based exact sequence deduplication with provenance-preserving exports"
+version: "0.1.0"
+authors:
+  - family-names: "Awuah"
+    given-names: "Michael Baffour"
+repository-code: "https://github.com/mbaffour/SeqSieve"
+license: "MIT"

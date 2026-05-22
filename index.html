@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SeqSieve is a local browser-based exact sequence deduplication tool with provenance-preserving exports.">
+    <title>SeqSieve | Exact sequence deduplication</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#top" aria-label="SeqSieve home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>
+            <strong>SeqSieve</strong>
+            <small>Deduplicate sequences. Preserve context.</small>
+          </span>
+        </a>
+        <nav class="header-nav" aria-label="Primary navigation">
+          <a href="./blog.html">Blog</a>
+          <a href="#docs">Docs</a>
+          <a href="#tests">Tests</a>
+          <a href="https://github.com/mbaffour/SeqSieve/" rel="noreferrer">GitHub</a>
+        </nav>
+        <div class="header-actions">
+          <span class="privacy-badge">Local-only processing</span>
+          <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle light and dark theme">Theme</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero section-band">
+        <div class="hero-copy">
+          <h1>Deduplicate FASTA and FASTQ sequences without losing biological context.</h1>
+          <p>SeqSieve performs exact deduplication in your browser and preserves counts, source IDs, representative choices, duplicate groups, and reproducible reports.</p>
+          <div class="hero-actions">
+            <button class="button primary" id="demoButton" type="button">Try demo data</button>
+            <button class="button secondary" id="uploadShortcut" type="button">Upload file</button>
+            <button class="button ghost" id="runTestsHero" type="button">Run validation tests</button>
+          </div>
+        </div>
+        <div class="instrument-panel" aria-label="SeqSieve workflow summary">
+          <div class="mesh-card">
+            <span class="mesh-label">Exact dedupe</span>
+            <div class="sequence-bands" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p>Identical normalized sequences collapse into one representative while every original record remains traceable.</p>
+          </div>
+          <div class="not-clustering">
+            <strong>Not similarity clustering</strong>
+            <p>Percent identity or coverage grouping belongs to tools such as CD-HIT, MMseqs2, VSEARCH, or usearch-like workflows.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="workbench">
+        <div class="workspace-grid">
+          <section class="panel upload-panel" aria-labelledby="uploadTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Input</p>
+                <h2 id="uploadTitle">Upload or paste sequences</h2>
+              </div>
+              <span id="formatPill" class="status-pill">No file</span>
+            </div>
+            <label class="dropzone" id="dropzone" for="fileInput">
+              <input id="fileInput" type="file" accept=".fa,.fasta,.faa,.fna,.ffn,.fas,.txt,.fastq,.fq,.gz">
+              <span class="dropzone-title">Drop FASTA/FASTQ here or choose a file</span>
+              <span class="dropzone-copy">Accepted: .fa, .fasta, .faa, .fna, .ffn, .fas, .txt, .fastq, .fq, .gz</span>
+            </label>
+            <textarea id="pasteInput" class="sequence-input" spellcheck="false" placeholder="Or paste FASTA/FASTQ text here"></textarea>
+            <div class="file-meta" id="fileMeta">
+              <span>File name: none</span>
+              <span>Size: 0 B</span>
+              <span>Estimated format: waiting</span>
+            </div>
+          </section>
+
+          <section class="panel settings-panel" aria-labelledby="settingsTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Protocol</p>
+                <h2 id="settingsTitle">Deduplication settings</h2>
+              </div>
+            </div>
+            <div class="settings-grid">
+              <label>Format
+                <select id="format">
+                  <option>Auto</option>
+                  <option>FASTA</option>
+                  <option>FASTQ</option>
+                </select>
+              </label>
+              <label>Sequence type
+                <select id="sequenceType">
+                  <option>Auto</option>
+                  <option>DNA</option>
+                  <option>RNA</option>
+                  <option>Protein</option>
+                </select>
+              </label>
+              <label>Deduplication mode
+                <select id="mode">
+                  <option value="sequence">By sequence content</option>
+                  <option value="id">By sequence ID</option>
+                  <option value="record">By full record</option>
+                </select>
+              </label>
+              <label>Representative rule
+                <select id="representativeRule">
+                  <option value="first">First occurrence</option>
+                  <option value="longest_sequence">Longest sequence</option>
+                  <option value="longest_header">Longest header</option>
+                  <option value="highest_mean_quality">Highest mean quality for FASTQ</option>
+                  <option value="rename">Rename as rep_000001</option>
+                </select>
+              </label>
+              <label>Rename prefix
+                <input id="renamePrefix" type="text" value="rep_">
+              </label>
+              <label>FASTA line wrapping
+                <select id="fastaLineWrap">
+                  <option value="60">60</option>
+                  <option value="80">80</option>
+                  <option value="none">No wrap</option>
+                </select>
+              </label>
+            </div>
+            <fieldset class="check-grid">
+              <legend>Normalization</legend>
+              <label><input id="caseSensitive" type="checkbox"> Case-sensitive</label>
+              <label><input id="removeWhitespace" type="checkbox" checked> Remove internal whitespace</label>
+              <label><input id="removeGaps" type="checkbox"> Remove gaps</label>
+              <label><input id="reverseComplement" type="checkbox"> Treat reverse complements as duplicates</label>
+            </fieldset>
+          </section>
+
+          <section class="panel action-panel" aria-labelledby="actionTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Run</p>
+                <h2 id="actionTitle">Analyze locally</h2>
+              </div>
+              <span id="workerStatus" class="status-pill">Worker ready</span>
+            </div>
+            <div class="button-row">
+              <button class="button secondary" id="analyzeButton" type="button">Analyze only</button>
+              <button class="button primary" id="dedupeButton" type="button">Deduplicate</button>
+              <button class="button ghost" id="cancelButton" type="button" disabled>Cancel</button>
+              <button class="button danger" id="resetButton" type="button">Reset</button>
+            </div>
+            <div class="progress-wrap" aria-live="polite">
+              <div class="progress-meta">
+                <span id="stageLabel">Waiting</span>
+                <span id="runtimeLabel">0 ms</span>
+              </div>
+              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span id="progressFill"></span>
+              </div>
+            </div>
+            <p class="privacy-note">Files are read by your browser only. SeqSieve has no server, database, analytics, or tracking code.</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="results section-band" aria-labelledby="resultsTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Results</p>
+          <h2 id="resultsTitle">Provenance-preserving outputs</h2>
+        </div>
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="viz-grid">
+          <div class="panel">
+            <h3>Unique versus duplicate records</h3>
+            <div id="uniqueDuplicateViz" class="bar-viz"></div>
+          </div>
+          <div class="panel">
+            <h3>Top duplicate groups</h3>
+            <div id="topGroupsViz" class="rank-viz"></div>
+          </div>
+          <div class="panel">
+            <h3>Group size distribution</h3>
+            <div id="distributionViz" class="rank-viz"></div>
+          </div>
+        </div>
+
+        <div class="results-layout">
+          <section class="panel preview-panel" aria-labelledby="previewTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Preview</p>
+                <h2 id="previewTitle">First 100 rows</h2>
+              </div>
+              <label class="filter-label">Filter
+                <input id="previewFilter" type="search" placeholder="Search current tab">
+              </label>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Result previews">
+              <button class="tab active" data-tab="deduped" role="tab" aria-selected="true">Deduplicated</button>
+              <button class="tab" data-tab="mapping" role="tab">Mapping</button>
+              <button class="tab" data-tab="groups" role="tab">Duplicate groups</button>
+              <button class="tab" data-tab="counts" role="tab">Counts</button>
+              <button class="tab" data-tab="warnings" role="tab">Warnings</button>
+              <button class="tab" data-tab="methods" role="tab">Methods</button>
+              <button class="tab" data-tab="json" role="tab">JSON metadata</button>
+            </div>
+            <div id="previewContent" class="preview-content" tabindex="0"></div>
+          </section>
+
+          <aside class="panel export-panel" aria-labelledby="exportTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Export</p>
+                <h2 id="exportTitle">Download reproducible files</h2>
+              </div>
+            </div>
+            <div class="export-buttons">
+              <button data-export="fasta" class="button secondary" type="button">Download deduplicated FASTA</button>
+              <button data-export="fastq" class="button secondary" type="button">Download deduplicated FASTQ</button>
+              <button data-export="mapping" class="button secondary" type="button">Download mapping TSV</button>
+              <button data-export="groups" class="button secondary" type="button">Download duplicate groups TSV</button>
+              <button data-export="counts" class="button secondary" type="button">Download counts TSV</button>
+              <button data-export="summary" class="button secondary" type="button">Download summary TXT</button>
+              <button data-export="json" class="button secondary" type="button">Download reproducibility JSON</button>
+              <button data-copy="methods" class="button ghost" type="button">Copy methods paragraph</button>
+              <button data-copy="summary" class="button ghost" type="button">Copy summary</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="education" id="docs" aria-labelledby="educationTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Scientific notes</p>
+          <h2 id="educationTitle">Exact deduplication, not clustering</h2>
+        </div>
+        <div class="education-grid">
+          <details open><summary>What is exact deduplication?</summary><p>Exact deduplication collapses records that become identical after the selected normalization settings. It does not group similar but non-identical sequences.</p></details>
+          <details><summary>Why preserve duplicate mappings?</summary><p>Mappings retain biological context: source records, original headers, group membership, and counts remain available for downstream interpretation.</p></details>
+          <details><summary>When should I not deduplicate?</summary><p>Avoid deduplication when abundance, sample-specific occurrence, read pairing, quality variation, or haplotype context is the primary signal unless count tables are retained and interpreted carefully.</p></details>
+          <details><summary>Deduplication versus clustering</summary><p>Clustering by percent identity or coverage is an approximate similarity task. Use CD-HIT, MMseqs2, VSEARCH, or usearch-like workflows when non-identical sequences should be grouped.</p></details>
+          <details><summary>Reverse-complement-aware deduplication</summary><p>For DNA/RNA, SeqSieve can use the lexicographically smaller forward or reverse-complement normalized sequence as the comparison key while preserving the selected representative in its original orientation.</p></details>
+          <details><summary>FASTQ quality caveats</summary><p>FASTQ deduplication can alter apparent read abundance. Use the exported count and mapping tables alongside deduplicated reads.</p></details>
+          <details><summary>HMM and phage database cleanup</summary><p>Exact deduplication is useful before HMM preparation, phage protein family curation, BLAST hit cleanup, amplicon dereplication, and microbial genome database maintenance.</p></details>
+        </div>
+      </section>
+
+      <section class="tests section-band" id="tests" aria-labelledby="testsTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Validation</p>
+          <h2 id="testsTitle">Browser-based validation tests</h2>
+        </div>
+        <div class="panel">
+          <div class="button-row">
+            <button class="button primary" id="runTestsButton" type="button">Run validation tests</button>
+          </div>
+          <div id="testResults" class="table-wrap"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>SeqSieve v0.1.0</span>
+      <span>Runs locally in your browser. No sequence data are uploaded.</span>
+      <a href="https://github.com/mbaffour/SeqSieve/">GitHub</a>
+      <span>Citation metadata in CITATION.cff</span>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
