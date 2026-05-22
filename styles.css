@@ -65,6 +65,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--text);
   background:
@@ -277,6 +278,14 @@ a {
   padding: var(--space-16) 0 var(--space-12);
 }
 
+.hero > *,
+.blog-hero > *,
+.workspace-grid > *,
+.results-layout > *,
+.article-layout > * {
+  min-width: 0;
+}
+
 .hero h1 {
   margin: 0;
   max-width: 820px;
@@ -299,12 +308,59 @@ a {
 
 .mesh-card,
 .not-clustering,
+.visual-card,
+.wide-visual-card,
 .panel,
 details {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: linear-gradient(180deg, color-mix(in srgb, var(--surface-elevated), transparent 8%), var(--surface));
   box-shadow: var(--shadow-soft);
+}
+
+.visual-card,
+.wide-visual-card {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  background: linear-gradient(180deg, var(--surface-elevated), var(--surface));
+}
+
+.visual-card img,
+.wide-visual-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.visual-card figcaption,
+.wide-visual-card figcaption {
+  position: absolute;
+  inset: auto 14px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent), var(--border) 55%);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--text);
+  background: rgba(11, 16, 32, 0.74);
+  backdrop-filter: blur(12px);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.hero-photo-card {
+  min-height: 270px;
+}
+
+.visual-story {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  padding: 0 0 var(--space-8);
+}
+
+.visual-story .visual-card {
+  min-height: 320px;
 }
 
 .mesh-card {
@@ -619,6 +675,24 @@ textarea {
   opacity: 0.8;
 }
 
+.sieve-visual img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sieve-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(11, 16, 32, 0.1), transparent 45%, rgba(11, 16, 32, 0.34));
+}
+
 .sieve-ring {
   position: absolute;
   inset: 44px;
@@ -662,6 +736,19 @@ textarea {
 .housekeeping,
 .article-layout {
   padding: var(--space-12) 0;
+}
+
+.wide-visual-card {
+  min-height: 280px;
+  margin-bottom: var(--space-4);
+}
+
+.wide-visual-card img {
+  max-height: 360px;
+}
+
+.privacy-art {
+  min-height: 240px;
 }
 
 .text-link,
@@ -1080,6 +1167,7 @@ details p {
   .results-layout,
   .viz-grid,
   .education-grid,
+  .visual-story,
   .article-layout {
     grid-template-columns: 1fr;
   }
@@ -1103,6 +1191,10 @@ details p {
   .glance-panel {
     position: static;
   }
+
+  .sieve-visual {
+    min-height: 320px;
+  }
 }
 
 @media (max-width: 620px) {
@@ -1119,6 +1211,14 @@ details p {
     padding-top: var(--space-8);
   }
 
+  .hero h1,
+  .blog-hero h1 {
+    max-width: 100%;
+    font-size: 2rem;
+    line-height: 1.08;
+    overflow-wrap: break-word;
+  }
+
   .settings-grid,
   .check-grid,
   .stats-grid,
@@ -1132,6 +1232,20 @@ details p {
     flex-direction: column;
   }
 
+  .sieve-visual,
+  .visual-story .visual-card,
+  .wide-visual-card {
+    min-height: 230px;
+  }
+
+  .visual-card figcaption,
+  .wide-visual-card figcaption {
+    position: static;
+    border-width: 1px 0 0;
+    border-radius: 0;
+    background: rgba(11, 16, 32, 0.9);
+  }
+
   .button-row,
   .hero-actions {
     align-items: stretch;
@@ -1141,6 +1255,14 @@ details p {
   .button,
   .icon-button {
     width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero h1,
+  .blog-hero h1 {
+    font-size: 1.72rem;
   }
 }
 

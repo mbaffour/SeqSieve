@@ -9,6 +9,7 @@ SeqSieve filters computational redundancy while preserving biological provenance
 Core metaphor:
 - Molecular mesh: redundancy passes through a precise sieve.
 - Sequence bands: unique records and duplicate groups remain traceable.
+- Hyper-realistic lab imagery: generated photos should feel playful, premium, and scientifically grounded without inventing product claims.
 - Laboratory notebook clarity: every setting and output is explicit.
 
 ## 2. Design Principles
@@ -115,6 +116,7 @@ Shadows:
 - Tabs: native button tabs with selected `aria-selected`.
 - Tables: first 100 rows in preview, horizontally scrollable, filterable, sortable where useful.
 - Code/FASTA preview: monospace, line wrapping controlled, never tiny.
+- Visual assets: use compressed local imagery with descriptive alt text unless the image is decorative. Images must support scientific meaning, not replace functional controls.
 - Export panel: grouped download buttons with explicit file types.
 - Education cards: concise, collapsible, and honest about limitations.
 
