@@ -8,6 +8,14 @@ export function parseFastq(text) {
   const nonTrailingLines = trimTrailingBlankLines(lines);
   const idCounts = new Map();
 
+  // Records are read with a fixed stride of 4 lines. Wrapped or multi-line FASTQ
+  // (where the sequence or quality spans several lines) does not fit that stride
+  // and would misalign silently. Surface a clear warning when the line count is
+  // not a multiple of 4 so the input can be reformatted to one line per field.
+  if (nonTrailingLines.length % 4 !== 0) {
+    warnings.push(`FASTQ line count (${nonTrailingLines.length}) is not a multiple of 4; records may be wrapped across multiple lines or truncated, and parsing may be misaligned. Provide one line each for header, sequence, +, and quality.`);
+  }
+
   for (let i = 0; i < nonTrailingLines.length; i += 4) {
     const startLine = i + 1;
     const headerLine = nonTrailingLines[i];
@@ -27,7 +35,12 @@ export function parseFastq(text) {
 
     const parsed = parseHeader(headerLine, "@");
     const recordWarnings = [];
-    if (!plusLine.startsWith("+")) recordWarnings.push("Plus line does not begin with +");
+    if (!plusLine.startsWith("+")) {
+      recordWarnings.push("Plus line does not begin with +");
+      // A misplaced separator line is a strong signal the fixed 4-line stride has
+      // drifted (e.g. a wrapped/multi-line record), so flag likely misalignment.
+      warnings.push(`Line ${startLine + 2}: expected '+' separator line but found "${plusLine.slice(0, 20)}"; FASTQ records may be wrapped across multiple lines and misaligned.`);
+    }
     if (sequenceLine.length !== qualityLine.length) {
       recordWarnings.push(`Sequence length (${sequenceLine.length}) differs from quality length (${qualityLine.length})`);
     }
