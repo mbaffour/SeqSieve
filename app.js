@@ -471,8 +471,19 @@ async function handleCopy(type) {
     return;
   }
   const text = type === "methods" ? state.methodsParagraph : state.summaryReport;
-  await navigator.clipboard.writeText(text);
-  setProgress(type === "methods" ? "Methods copied" : "Summary copied", 100);
+  const label = type === "methods" ? "Methods" : "Summary";
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+    await navigator.clipboard.writeText(text);
+    setProgress(`${label} copied`, 100);
+  } catch (error) {
+    // Clipboard access can be blocked (insecure context, denied permission, or
+    // older browsers); fall back to downloading the text so it is never lost.
+    const base = sanitizeFilename(state.inputMeta.name || "seqsieve");
+    const suffix = type === "methods" ? "methods.txt" : "summary.txt";
+    downloadTextFile(timestampedFilename(base, suffix), text, "text/plain");
+    setProgress(`${label} downloaded (clipboard unavailable)`, 100);
+  }
 }
 
 function renderValidationTests() {
