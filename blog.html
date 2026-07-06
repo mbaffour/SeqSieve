@@ -59,7 +59,7 @@
             <p class="eyebrow">Tutorials</p>
             <h2 id="tutorialsTitle">Step-by-step guides for common workflows</h2>
           </div>
-          <a class="text-link" href="./TUTORIALS.md">Open tutorial markdown</a>
+          <a class="text-link" href="./TUTORIALS.md">View TUTORIALS.md (raw)</a>
         </div>
         <figure class="wide-visual-card">
           <img src="./assets/seqsieve-tutorial-lab.webp" alt="A dark laboratory tutorial scene showing sequence notes, reverse-complement DNA, quality bars, and warning diagnostics" width="1200" height="800" loading="lazy">
@@ -123,18 +123,13 @@ MKTLLV</pre>
           </article>
           <article>
             <h3>Request an improvement</h3>
-            <p>Have a workflow idea for phage databases, HMM preparation, BLAST cleanup, amplicon dereplication, or FASTQ handling? Tell us why it matters scientifically.</p>
+            <p>Have a workflow idea for phage databases, HMM preparation, BLAST cleanup, amplicon dereplication, or FASTQ handling? Explain why it matters scientifically.</p>
             <a href="https://github.com/mbaffour/SeqSieve/issues/new?template=feature_request.yml">Request a feature</a>
           </article>
           <article>
             <h3>Cite SeqSieve</h3>
             <p>If SeqSieve helps your research, use <code>CITATION.cff</code> and include the exported methods paragraph in workflow notes.</p>
-            <a href="./CITATION.cff">View citation metadata</a>
-          </article>
-          <article>
-            <h3>Host it yourself</h3>
-            <p>SeqSieve is static. Fork the repository, enable GitHub Pages, and serve the app plus this announcement page without a backend.</p>
-            <a href="#deploy">Deployment guide</a>
+            <a href="./CITATION.cff">View CITATION.cff (raw)</a>
           </article>
         </div>
       </section>
@@ -142,6 +137,7 @@ MKTLLV</pre>
       <section class="article-layout section-band">
         <aside class="toc-panel" aria-label="On this page">
           <strong>On this page</strong>
+          <a href="#why-built">Why I built this</a>
           <a href="#what">What is SeqSieve?</a>
           <a href="#why">Why exact deduplication?</a>
           <a href="#features">Key features</a>
@@ -150,13 +146,16 @@ MKTLLV</pre>
           <a href="#tutorial-fastq">FASTQ tutorial</a>
           <a href="#tutorial-warnings">Warnings tutorial</a>
           <a href="#contribute">Contribute</a>
-          <a href="#deploy">Deploy</a>
         </aside>
 
         <article class="announcement-article">
           <p class="article-meta">Announcement · SeqSieve v0.1.0</p>
           <h2>Announcing SeqSieve v0.1.0</h2>
           <p class="lead">A modern, fully client-side tool for exact sequence deduplication with provenance-preserving exports.</p>
+
+          <h3 id="why-built">Why I built this</h3>
+          <p>Most of my day is spent with phage sequences, and redundancy is everywhere: duplicate proteins across genomes, the same hit repeated down a BLAST list, amplicon reads that need dereplicating before anything else makes sense. None of it is biological signal. It is computational clutter that quietly inflates counts, skews profiles, and pollutes every downstream step if you let it through. I kept reaching for a quick way to collapse the exact duplicates and just get on with the actual analysis.</p>
+          <p>The dedup tools I tried all made the same trade: they threw away the very provenance I needed to trust the result. I would end up with a smaller file and no clear record of what had been merged, how many copies each representative stood for, or which IDs mapped where. So I built SeqSieve to collapse exact duplicates while keeping all of that intact: the counts, the identifiers, the duplicate-group mappings, and a reproducible methods paragraph I can paste straight into a notebook. It runs entirely in the browser because sequence data should not have to leave my machine to get cleaned up.</p>
 
           <h3 id="what">What is SeqSieve?</h3>
           <p>SeqSieve deduplicates FASTA and FASTQ records directly in the browser. It supports exact sequence-content deduplication, ID-based deduplication, full-record deduplication, normalization controls, reverse-complement-aware DNA/RNA matching, representative selection, and publication-ready reports.</p>
@@ -212,16 +211,6 @@ MKTLLV</pre>
 
           <h3 id="contribute">Reporting errors and requesting improvements</h3>
           <p>Useful reports include a small safe example, selected settings, expected output, observed output, browser and operating system, and whether the issue affects preview, export, parsing, or scientific interpretation. For feature requests, describe the biological workflow first and the desired UI second.</p>
-
-          <h3 id="deploy">Hosting SeqSieve and this blog on GitHub Pages</h3>
-          <ol>
-            <li>Create a new repository named <code>SeqSieve</code>.</li>
-            <li>Add all files in this folder at the repository root.</li>
-            <li>Commit with a message such as <code>Release SeqSieve v0.1.0</code>.</li>
-            <li>Push to GitHub.</li>
-            <li>Open repository settings, choose <strong>Pages</strong>, and publish from the root of the default branch.</li>
-            <li>The app will live at <code>https://mbaffour.github.io/SeqSieve/</code>; the blog will live at <code>https://mbaffour.github.io/SeqSieve/blog.html</code>.</li>
-          </ol>
         </article>
 
         <aside class="glance-panel" aria-label="At a glance">
